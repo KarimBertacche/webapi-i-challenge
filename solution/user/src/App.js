@@ -11,7 +11,7 @@ const StyledApp = styled.div`
   .users-wrapper {
     width: 100%;
     height: 75%;
-    border-bottom: 3px solid red;
+    border-bottom: 3px solid #355c7d;
     overflow-y: scroll;
     padding-left: auto;
     margin: 0;
@@ -27,7 +27,7 @@ const StyledApp = styled.div`
       width: 80%;
       min-width: 300px;
       min-height: 150px;
-      border: 3px solid red;
+      border: 3px solid #355c7d;
       border-radius: 5px;
       margin: 40px auto;
       text-align: center;
@@ -56,20 +56,31 @@ const StyledApp = styled.div`
       button { 
         width: 50%;
         height: 100%;
-        background-color: red;
-        border: 3px solid red;
+        background-color: #355c7d;
+        border: none;
+        border-top: 3px solid #355c7d;
         font-weight: bold;
         font-size: 1.5rem;
         cursor: pointer;
+        color: white;
+        outline: none;
   
         &:hover {
           background-color: white;
-          color: red;
+          border-top: 3px solid #355c7d;
+          color: #355c7d;
         }
 
         &:last-child {
           border-bottom-left-radius: 5px;
           border-bottom-right-radius: 5px;
+
+          &:hover {
+            border-left: 3px solid #355c7d;
+            border: 3px solid #355c7d;
+            /* border-bottom: 3px solid #355c7d;
+            border-right: 3px solid #355c7d; */
+          }
         }
       }
     }
@@ -86,15 +97,15 @@ const StyledApp = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: red;
-    border: 3px solid red;
+    background-color: #355c7d;
+    border: 3px solid #355c7d;
     border-radius: 10px;
     z-index: 2;
 
     input {
       width: 80%;
       height: 30px;
-      border: 3px solid red;
+      border: 3px solid #355c7d;
       border-radius: 5px;
       margin-bottom: 20px;
       text-align: center;
@@ -104,16 +115,14 @@ const StyledApp = styled.div`
     button {
       width: 20%;
       height: 35px;
-      border: 3px solid red;
+      border: 3px solid #355c7d;
       border-radius: 5px;
       font-size: 2rem;
       font-weight: bold;
       cursor: pointer;
+      outline: none;
     }
   }
-
-
-
 `;
 
 class App extends React.Component {
