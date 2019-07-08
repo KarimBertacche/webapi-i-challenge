@@ -11,11 +11,8 @@ const StyledApp = styled.div`
   .users-wrapper {
     width: 100%;
     height: 75%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 3px solid red;
-    overflow-x: auto;
+    border-bottom: 3px solid red;
+    overflow-y: scroll;
     padding-left: auto;
     margin: 0;
     box-sizing: border-box;
@@ -27,11 +24,12 @@ const StyledApp = styled.div`
 
     .user {
       position: relative;
+      width: 80%;
       min-width: 300px;
       min-height: 150px;
       border: 3px solid red;
       border-radius: 5px;
-      margin: 10px;
+      margin: 40px auto;
       text-align: center;
       font-size: 2rem;
 
@@ -41,6 +39,10 @@ const StyledApp = styled.div`
 
       p {
         margin-top: 0;
+      }
+
+      &:last-child {
+        margin-bottom: 120px;
       }
     }
   
