@@ -4,6 +4,7 @@ const server = express();
 const db = require('./data/db');
 
 server.use(express.json());
+server.use(cors());
 
 server.get('/api/users', (req, res) => {
     db.find()
@@ -14,7 +15,7 @@ server.get('/api/users', (req, res) => {
         })
         .catch(error => {
             res.status(404).json({
-                message: 'error retrieving users'
+                message: 'The users information could not be retrieved.'
             })
         });
 });
@@ -30,13 +31,13 @@ server.get('/api/users/:id', (req, res) => {
                 });
             } else {
                 res.status(404).json({
-                    message: 'User Id not found'
+                    message: 'The user with the specified ID does not exist.'
                 });
             }
         })
         .catch(error => {
             res.status(500).json({
-                message: 'error retrieving the user'
+                message: 'The user information could not be retrieved.'
             });
         });
 });
@@ -44,17 +45,28 @@ server.get('/api/users/:id', (req, res) => {
 server.post('/api/users', (req, res) => {
     const newUser = req.body;
 
-    db.insert(newUser)
-        .then(user => {
-            res.status(201).json({
-                result: user
-            })
-        })
-        .catch(error => {
-            res.status(500).json({
-                message: 'error creating new user'
-            })
+    if(newUser.name === undefined) {
+        res.status(400).send({
+            errorMessage: "Please provide name for the user." 
         });
+    } else if(newUser.bio === undefined){
+        res.status(400).send({
+            errorMessage: "Please provide bio for the user." 
+        });
+    } else {
+        db.insert(newUser)
+            .then(user => {
+                res.status(201).json({
+                    result: user
+                })
+            })
+            .catch(error => {  
+                res.status(500).json({
+                    message: 'There was an error while saving the user to the database',
+                    error: error
+                })
+            });
+    }
 });
 
 server.delete('/api/users/:id', (req, res) => {
@@ -66,13 +78,13 @@ server.delete('/api/users/:id', (req, res) => {
                 res.status(204).end();
             } else {
                 res.status(404).json({
-                    message: 'User Id not found'
+                    message: 'The user with the specified ID does not exist.'
                 });
             }
         })
         .catch(error => {
             res.status(500).json({
-                message: 'error deleting user'
+                message: 'The user could not be removed'
             })
         });
 });
@@ -81,23 +93,33 @@ server.put('/api/users/:id', (req, res) => {
     const { id } = req.params;
     const changes = req.body;
 
-    db.update(id, changes)
-        .then(updated => {
-            if(updated) {
-                res.status(200).json({
-                    result: updated
-                });
-            } else {
-                res.status(404).json({
-                    message: 'User Id not found'
-                });
-            }
-        })
-        .catch(error => {
-            res.status(500).json({
-                message: 'error updating user'
-            });
+    if(newUser.name === undefined) {
+        res.status(400).send({
+            errorMessage: "Please provide name for the user." 
         });
+    } else if(newUser.bio === undefined){
+        res.status(400).send({
+            errorMessage: "Please provide bio for the user." 
+        });
+    } else {
+        db.update(id, changes)
+            .then(updated => {
+                if(updated) {
+                    res.status(200).json({
+                        result: updated
+                    });
+                } else {
+                    res.status(404).json({
+                        message: 'The user with the specified ID does not exist.'
+                    });
+                }
+            })
+            .catch(error => {
+                res.status(500).json({
+                    message: 'The user information could not be modified.'
+                });
+            });
+    }
 });
 
 server.listen(3000, () => {
