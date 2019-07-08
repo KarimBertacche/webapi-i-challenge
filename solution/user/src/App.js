@@ -70,18 +70,6 @@ const StyledApp = styled.div`
           border-top: 3px solid #355c7d;
           color: #355c7d;
         }
-
-        &:last-child {
-          border-bottom-left-radius: 5px;
-          border-bottom-right-radius: 5px;
-
-          &:hover {
-            border-left: 3px solid #355c7d;
-            border: 3px solid #355c7d;
-            /* border-bottom: 3px solid #355c7d;
-            border-right: 3px solid #355c7d; */
-          }
-        }
       }
     }
   }
@@ -163,17 +151,19 @@ class App extends React.Component {
   }
 
   postUserHandler = () => {
-    axios
-      .post('http://localhost:3000/api/users', {
-        name: this.state.name,
-        bio: this.state.bio
-      })
-        .then(response => {
-            this.setState({ userData: response.data.result });
+    if(this.state.name !== '' || this.state.bio !== '') {
+      axios
+        .post('http://localhost:3000/api/users', {
+          name: this.state.name,
+          bio: this.state.bio
         })
-        .catch(error => {
-          debugger;
-        });
+          .then(response => {
+              this.setState({ userData: response.data.result });
+          })
+          .catch(error => {
+            debugger;
+          });
+    }
   }
 
   passUserHandler = (id, user) => {
@@ -222,7 +212,6 @@ class App extends React.Component {
                         <h2>{user.name}</h2>
                         <p>{user.bio}</p>
                         <div className="buttons">
-                          <button onClick={this.postUserHandler}>Post</button>
                           <button 
                             onClick={() => this.passUserHandler(user.id, {
                               name: user.name,
