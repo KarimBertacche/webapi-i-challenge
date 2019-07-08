@@ -14,8 +14,30 @@ server.get('/api/users', (req, res) => {
         })
         .catch(error => {
             res.status(404).json({
-                message: 'error retrieving data'
+                message: 'error retrieving the data'
             })
+        });
+});
+
+server.get('/api/users/:id', (req, res) => {
+    const { id } = req.params;
+
+    db.findById(id)
+        .then(data => {
+            if(data) {
+                res.status(200).json({
+                    result: data
+                });
+            } else {
+                res.status(404).json({
+                    message: 'Id not found'
+                });
+            }
+        })
+        .catch(error => {
+            res.status(500).json({
+                message: 'error retrieving the data'
+            });
         });
 });
 
