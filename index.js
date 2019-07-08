@@ -94,11 +94,11 @@ server.put('/api/users/:id', (req, res) => {
     const { id } = req.params;
     const changes = req.body;
 
-    if(newUser.name === undefined) {
+    if(changes.name === undefined) {
         res.status(400).send({
             errorMessage: "Please provide name for the user." 
         });
-    } else if(newUser.bio === undefined){
+    } else if(changes.bio === undefined){
         res.status(400).send({
             errorMessage: "Please provide bio for the user." 
         });
